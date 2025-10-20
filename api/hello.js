@@ -2,7 +2,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
 // Replace with your actual secret token or use environment variables
-const AUTH_TOKEN = process.env.AUTH_TOKEN || 'mysecrettoken';
+//const AUTH_TOKEN = process.env.AUTH_TOKEN || 'mysecrettoken';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   const authHeader = req.headers.authorization;
