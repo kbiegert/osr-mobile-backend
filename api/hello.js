@@ -1,22 +1,22 @@
-// api/hello.js
-import { VercelRequest, VercelResponse } from '@vercel/node';
-
-// Replace with your actual secret token or use environment variables
-//const AUTH_TOKEN = process.env.AUTH_TOKEN || 'mysecrettoken';
-
-export default function handler(req: VercelRequest, res: VercelResponse) {
+export default function handler(req, res) {
   const authHeader = req.headers.authorization;
 
-  // if (!authHeader || !authHeader.startsWith('Bearer ')) {
-  //   return res.status(401).json({ error: 'Missing or malformed Authorization header' });
-  // }
+  // Replace with your actual secret token
+  const SECRET_TOKEN = process.env.SECRET_BEARER_TOKEN || 'my-secret-token';
 
-  // const token = authHeader.split(' ')[1];
+  // Check for Authorization header
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Missing or invalid Authorization header' });
+  }
 
-  // if (token !== AUTH_TOKEN) {
-  //   return res.status(403).json({ error: 'Invalid token' });
-  // }
+  // Extract the token
+  const token = authHeader.split(' ')[1];
 
-  // Proceed with the protected logic
-  return res.status(200).json({ message: 'Access granted to protected endpoint.' });
+  // Validate token
+  if (token !== SECRET_TOKEN) {
+    return res.status(403).json({ error: 'Forbidden: Invalid token' });
+  }
+
+  // Token is valid
+  return res.status(200).json({ message: 'Authenticated successfully!' });
 }
